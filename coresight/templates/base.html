@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% load static %}
+
+    <head>
+
+        {% include '_headers.html' %}
+
+        {% block css %}
+        {% endblock css %}
+    
+    </head>
+    
+    <body>
+        <!-- Top Nav Bar-->
+        {% include 'top_navbar.html' %}
+        <!-- Top Nav Bar End-->
+        <!-- Nav Bar Start -->
+        {% include 'nav.html' %}
+        <!-- Nav Bar End -->
+
+        <!-- Top News Start-->
+        {% block content %}
+        {% endblock content %}
+
+        <!-- Footer Start -->
+        {% include '_footer.html' %}
+        <!-- Footer End -->
+
+        <!-- JavaScript Libraries -->
+        {% include '_js.html' %}
+
+        {% block javascript %}
+        {% endblock javascript %}
+    </body>
+</html>

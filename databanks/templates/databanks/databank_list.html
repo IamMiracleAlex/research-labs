@@ -1,0 +1,45 @@
+{% extends 'base.html'  %}
+{% load static crispy_forms_tags %}
+{% load static filters %}
+
+    {% block css %}
+   <link href="{% static 'css/posts.css' %}" rel="stylesheet" />
+
+    {% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="mt-20">
+        <h4 class="bold">Data</h4>
+    </div>
+    <hr>
+    <div class="">
+        <div class="row">
+            {% for data in databanks %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pd-10">
+                <div class="card">
+                    <a href="{% url 'databank_detail' data.id %}" target="_blank">
+                        {% if data.image %}
+                        <img src="{{data.image.url}}" height="175" />
+                        {% else %}
+                        <img src="http://via.placeholder.com/640x360" height="175" />
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <h5 class="display-5 data-text">{{data.title|truncatechars:45}}</h5>
+                    </div>
+                    <div class="card-link">
+                        <a class="more" href="{% url 'databank_detail' data.id %}" target="_blank">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div style="width: 100%; text-align: center;">
+                <p>No available databanks at the moment...</p>
+            </div>
+            {% endfor %}
+        </div> 
+    </div>
+</div>
+{% endblock %}
+

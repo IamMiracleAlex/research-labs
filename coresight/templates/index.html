@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static filters %}
+
+{% block content %}
+<!-- Top Bar Start -->
+{% render_header featured_post %}
+<!-- Top Bar Start -->
+
+<!-- Trending Posts -->
+{% if trending_posts %}
+<div class="container-fluid">
+    <div class="row coresight-header-wrapper">
+        <div class="col-md-3 coresight-header-li">
+            <p class="heading">Trending Research Reports</p>
+        </div>
+        {% for post in trending_posts %}
+        <div class="col-md-3 coresight-header-li">
+            <a href="{% url 'post-detail' slug=post.slug %}"><p>{{ post.title }}</p></a>
+        </div>
+        {% empty %}
+        <div class="col-md-9 coresight-header-li">
+            <p style="text-align: center; width: 100%;">Check back for more trending posts</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<!-- Trending Posts End -->
+
+<!-- Featured Insights -->
+<section class="coresight-container">
+    <div class="row coresight-row">
+        <div class="col-md-12">
+            <h2 class=" text-center mb-40 title">Featured Insights From Two of Our Famous Insights</h2>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                {% for post in featured_insights %}
+                <div class="col-md-6 col-sm-12 coresight-insight-link">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="height: 150px;"></div>
+                            <a href="{% url 'post-detail' slug=post.slug %}">
+                                <div style="height: 170px;">
+                                    <small>{{post.created_at|date:'F d, Y'}}</small>
+                                    <p class="title-font">{{post.title}}</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-img" style="background-image: url('{{post.image}}');">    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <a href="{% url 'all_researches' %}">
+                    <div class="read-more">
+                        Read more articles 
+                        <span class="span"><i class="fa fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured Insights End -->
+
+<!-- Insights from Sector -->
+{% if featured_sector %}
+<section class="coresight-container">
+    <h2 class="text-center mb-40 title">Featured Insights from Sectors</h2>
+    <div class="row pd-10 mb-40">
+        <div class="col-md-7 col-sm-12">
+            <img src="{{ featured_sector.image }}" alt="" srcset="" style="width: 100%;">
+        </div>
+        <div class="col-md-5 col-sm-12" style="display: flex; justify-content: center; flex-direction: column;">
+            <p>{{ featured_sector.category }}</p>
+            <h4 class="main-title">{{featured_sector.title}}</h4>
+            <div>
+                <p>{{featured_sector.excerpt}}</p>
+            </div>
+            <a href="{% url 'post-detail' slug=featured_sector.slug %}" class="btn" style="text-align: left;">
+                Read More 
+                <span><i class="fa fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </div>
+    <div class="row row-detail">
+        <hr>
+        {% for post in list_sectors %}
+            {% render_post post %}
+        {% empty %}
+        <div class="col-md-12">
+            <i class="fas fa-empty"></i>
+            <p class="text-center">No available recommendations yet, read a post to get recommendations</p>
+        </div>
+    
+        {% endfor %}
+    </div>
+    <div class="text-center">
+        <a href="{% url 'sector_list' %}">
+            <button class="btn btn-outline-danger">See all sectors 
+                <span><i class="fa fa-arrow-right"></i></span>
+            </button>
+        </a>
+    </div>
+</section>
+{% endif %}
+<!-- Insights From Sector End -->
+
+<!-- Insights from Events -->
+{% if featured_event %}
+<section class="coresight-container">
+    <h2 class="text-center mb-40 title">Featured Insights from Events</h2>
+    <div class="row pd-10 mb-40">
+        <div class="col-md-5 col-sm-12" style="display: flex; justify-content: center; flex-direction: column;">
+            <p>{{ featured_event.category }}</p>
+            <h3 class="title">{{featured_event.title}}</h3>
+            <div>
+                <p>{{featured_event.excerpt}}</p>
+            </div>
+            <a href="{% url 'event_detail' pk=featured_event.id %}" class="btn">Read More 
+                <span><i class="fa fa-arrow-right"></i></span>
+            </a>
+        </div>
+        <div class="col-md-7 col-sm-12">
+            <img src="{{ featured_event.banner_image.url }}" alt="" srcset="" style="width: 100%;">
+        </div>
+    </div>
+    <div class="row row-detail">
+        <hr>
+        {% for post in list_events %}
+        <div class="col-lg-3 col-md-4 col-sm-6 pd-10">
+            <div class="card">
+                <a href="{% url 'event_detail' pk=post.id %}">
+                    <span class="play-icon" id="play_button"><i class="fa fa-play"></i></span>
+                    {% if post.banner_image %}
+                        <img src="{{ post.banner_image.url }}"/>
+                    {% else %}
+                        <img src="{% static '/images/no_image.png' %}"/>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <p class="card-text semi-bold pb-0 mb-0">{{ post.title|truncatechars:50 }}</p>
+                </div>
+                <div class="card-link">
+                    <a class="more" href="{% url 'event_detail' pk=post.id %}">See details
+                        <span><i class="fa fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-md-12">
+            <i class="fas fa-empty"></i>
+            <p class="text-center">No available recommendations yet, read a post to get recommendations</p>
+        </div>
+    
+        {% endfor %}
+    </div>
+    <div class="text-center">
+        <a href="{% url 'event_list' %}">
+            <button class="btn btn-outline-danger">See all Events 
+                <span><i class="fa fa-arrow-right"></i></span>
+            </button>
+        </a>
+    </div>
+</section>
+{% endif %}
+<!-- Insights from Events End-->
+
+{% if featured_databank %}
+<!-- Insights from Data -->
+<section class="coresight-container">
+    <div>
+        <h2 class="text-center mb-40 title">Data Banks</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Odio eu etiam faucibus nulla aliquam. 
+            At risus donec pellentesque nulla. Malesuada quam ipsum maecenas fermentum bibendum et non mattis urna. 
+            Ut adipiscing venenatis auctor donec est, lacus, nec cras in.
+        </p>
+    </div>
+    <div class="row pd-10 mb-40">
+        <div class="col-md-6 col-sm-12" style="display: flex; justify-content: center; flex-direction: column;">
+            <div class="row row-detail data-row">
+                <hr>
+                {% for post in list_databanks %}
+                    {% render_vertical_post post %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 coresight-inner-wrapper">
+            <div class="_inner">
+                <small>Article</small>
+                <h4 class="title-font">{{featured_databank.title}}</h4>
+                <p>{{featured_databank.summary}}
+                </p>
+                <button class="btn bg-white">
+                    See more data 
+                    <span><i class="fa fa-arrow-right"></i></span>
+                </button>
+            </div>
+            <div class="coresight-inner-pic" style="background: url('{{ featured_databank.image.url }}') no-repeat; background-size: cover;">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Insights from Data End-->
+<!-- News and Media -->
+<section class="coresight-container">
+    <div>
+        <h2 class="text-center mb-40 title">News and Media Coverage</h2>
+    </div>
+    <div class="row pd-10 mb-40" style="height: 500px;">
+        <div class="col-md-6" style="padding-right: 0; position: relative;">
+            <div class="pan-zoom"
+                style="background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0) 40%, rgba(245, 206, 210, 1) 70%), url('static/images/news_live_selling.png');">
+                <a class="pan-anchor" target="_blank" href="https://www.retailtouchpoints.com/topics/digital-commerce/social-commerce/live-selling-the-solution-for-deepening-consumer-relationships-in-a-rapidly-evolving-retail-landscape">
+                    <div style="color: #000;">
+                        <small>Retail TouchPoints | September 26, 2022</small>
+                        <h4 class="main-title" style="color: #000;">Live Selling: the Solution for Deepening Consumer Relationships in a Rapidly Evolving Retail Landscape</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-left: 0;">
+            <div style="display: flex; height: 70%;">
+                <div class="m-50" style="background: url('static/images/news.png') no-repeat; width: 100%;"></div>
+                <div class="col-md-6" style="display: flex; flex-direction: column; justify-content: center;">
+                    <a class="pan-anchor" href="https://www.retailbrew.com/stories/2022/08/10/payment-experts-break-down-which-solutions-will-define-luxury-and-fast-fashion-in-the-years-to-come">
+                        <small>September 8, 2022</small>
+                        <h5 class="semi-bold">Payment experts break down which solutions will define luxury and fast fashion in the years to come</h5>
+                    </a>
+                </div>
+            </div>
+            <div style="display: flex; background: #CF2E2E; height: 30%; padding: 20px;">
+                <div class="col-md-7" style="color: #fff;">
+                    <a class="pan-anchor" href="https://www.luxurydaily.com/sephora-debuts-new-campaign-in-honor-of-deaf-awareness-month/">
+                        <small>September 28, 2022</small>
+                        <h5 class="title-font" style="color: #fff;">
+                            Sephora shares advocacy assets for International Week of Deaf People
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- News and Media End -->
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+    // Ensure that the current active tab is in focus when page reloads.
+    // Especially in the case of pagination.
+    $(document).ready(function(){
+        $('a[data-toggle="pill"]').on('click', function(e) {
+            localStorage.setItem('activeTab', $(e.target).attr('id'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $(`#${activeTab}`).tab('show');
+        }
+    });
+</script>
+{% endblock %}

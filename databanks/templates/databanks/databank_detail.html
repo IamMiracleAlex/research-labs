@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block jumbotron %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 detail">
+         
+            <div class="detail-title">
+                <h1>{{ databank.title }}</h1>
+
+                <h6><strong>Updated: {{databank.updated_at|date:"F d, Y" }} </strong> </h6>
+            </div>
+        
+            <div class="detail-body mt-20">
+                {{ databank.body|safe }}
+            </div>
+        </div>
+
+        {% if not databank.is_premium %}
+        <div>
+        <hr>
+        <p>This report is for Premium subscribers only. Learn more about <a href="#">subscriptions</a>  here.</p>
+        <hr>
+        </div>
+        
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

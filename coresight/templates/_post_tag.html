@@ -1,0 +1,27 @@
+{% load static %}
+<div class="col-lg-3 col-md-4 col-sm-6 pd-10">
+    <div class="card">
+        <a href="{% url 'post-detail' slug=post.slug %}">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" />
+            {% else %}
+            <img src="{% static 'images/no_image.png' %}" alt="" />
+            {% endif %}
+        </a>
+        <div class="card-body">
+        {% comment %} <span class="category thin">{{ post.theme|truncatewords:7 }}</span> {% endcomment %}
+        <p class="card-text semi-bold">{{ post.title|truncatechars:40 }}</p>
+        {% if post.excerpt %}
+        <p class="card-text-small">{{post.excerpt|truncatechars:100}}</p>
+        {% else %}
+        <p class="card-text-small">{{ post.short_body|default_if_none:""|striptags|safe|truncatechars:100 }}</p>
+        {% endif %}
+        </div>
+        <div class="card-link">
+            <a
+                class="more"
+                href="{% url 'post-detail' slug=post.slug %}"
+            >Read More <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+{% load static %}
+<div class="bg-red row sticky-top" style="box-shadow: 0px 0px 6px 3px rgba(0,0,0,.1);">
+    {% if messages %} 
+        {% for message  in messages %}
+        <div id="message" class="container">
+            <div class="popin alert alert-{{ message.tags }} alert-dimissible text-center mt-2" role="alert">
+                <button class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    <nav class="navbar container-fluid navbar-expand-lg coresight-nav">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img
+                    src="{% static 'images/logo_white.png' %}" alt="CORESIGHT_RESEARCH"
+                    width="120"
+            >
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <i class="fas fa-bars" style="color: #000 !important;"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all_researches' %}">All Research</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sector_list' %}">Sectors</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'theme-list' %}">
+                        Themes
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'event_list' %}">
+                        Events
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'databank_list' %}">
+                        Data
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-item dropdown search-dropdown">
+				<a data-toggle="dropdown" class="nav-item nav-link dropdown-t" href="#"><i class="fa fa-search"></i></a>
+				<a data-toggle="dropdown" class="nav-item nav-link dropdown-t d-none" href="#"><i class="fa fa-close"></i></a>
+				<div class="dropdown-menu">
+					<div>
+                        <form method="get" action="{% url 'all_researches' %}">
+                            <div class="form-group">
+                                <div class="input-group search-box">								
+                                    <input type="text" name="q" id="search" class="form-control" placeholder="Search here...">
+                                    <div class="input-group-append">
+                                        <button type="search" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <input type="checkbox" name="advanced" id="advancedSearch" disabled>
+                                Advanced Search <small style="background-color: #111; color: #fff; padding: 3px; font-size: .2rem !important;">Beta 1.0</small>
+                            </div>
+                            <div id="advancedSearchForm" class="d-none">
+                                <hr>
+                                <h5 class="semi-bold">Advanced Search</h5> 
+                                <div class="form-group">
+                                    <label for="search_type">Alogorithm</label><br>
+                                    <small>(Choose how advanced your want you search query to be generated)</small>
+                                    <select name="search_type" class="form-control">
+                                        <option value="">Select Advanced Search Key</option>
+                                        <option value="plain">Plain</option>
+                                        <option value="phrase">Phrase</option>
+                                        <option value="raw">Raw</option>
+                                        <option value="websearch">Web Search</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rank">Ranking</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rank" id="inlineRadio1" value="option1" />
+                                            <label class="form-check-label" for="inlineRadio1">Title</label>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rank" id="inlineRadio2" value="option2" />
+                                            <label class="form-check-label" for="inlineRadio2">Body</label>
+                                        </div>
+                                        
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rank" id="inlineRadio3" value="option3" />
+                                            <label class="form-check-label" for="inlineRadio3">Author</label>
+                                        </div>
+    
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rank" id="inlineRadio3" value="option3" />
+                                            <label class="form-check-label" for="inlineRadio3">Category</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>                        
+                    </div>
+                </div>
+            </div>
+            {% if not user.is_authenticated %}
+                <div class="login">
+                    <a type="button" class="nav-link sign-in" data-toggle="modal" data-target="#myModal">
+                        Sign In
+                    </a>
+                    <a href="{% url 'signup' %}">
+                        <button
+                                class="btn bg-white"
+                                type="button"
+                        >Register/Subscribe
+                        </button>
+                    </a>
+                </div>
+            {% else %}
+                <div class="login">
+                    {% if user.is_staff %}
+                    <a class="nav-link sign-in" href="{% url 'post-list' %}">Production </a>
+                    {% endif %}
+                    <a class="nav-link" href="{% url 'users:account' %}">
+                        <i class="fa fa-user-circle"></i> Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}?next=/" class="nav-link">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+</div>
+
+{% include 'login.html' %}
+
+
+

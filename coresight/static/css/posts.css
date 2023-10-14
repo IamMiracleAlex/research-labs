@@ -1,0 +1,36 @@
+.left {
+        padding-right: 50px;
+    }
+
+    nav {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .xtm {
+        color: blue;
+    }
+
+    h3 {
+        font-weight: 300;
+    }
+
+    main {
+        margin-left: 20px;
+        padding: 20px;
+        width: 95%;
+        box-shadow: 0 0 5px lightskyblue;
+    }
+
+
+    .can {
+        width: 350px;
+        height: 60px;
+    }
+
+
+    .form-inline div{
+        padding: 5px;
+    }

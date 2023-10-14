@@ -1,0 +1,16 @@
+{% load static %}
+<div class="card pd-10" style="width: 100%;">
+    <div class="card-body">
+    {% comment %} <span class="category thin">{{ post.theme|truncatewords:7 }}</span> {% endcomment %}
+    <h4 class="card-text semi-bold">{{ post.title }}</h4>
+    {% if post.summary %}
+    <p class="card-text-small">{{post.summary}}</p>
+    {% endif %}
+    </div>
+    <div class="card-link">
+        <a
+            class="more"
+            href="{% url 'databank_detail' post.id %}"
+        >Read More <i class="fa fa-arrow-right"></i></a>
+    </div>
+</div>

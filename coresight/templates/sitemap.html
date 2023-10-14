@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="header p-4">
+            <h3> CoreSight Research Sitemap</h3>
+            <hr>
+        </div>
+        <section>
+            <h3>Research</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 pd-10">
+                        <a class="text-primary"
+                           href="{% url 'all_researches' %}">All Research</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </section>
+        <section>
+            <h3>Sectors</h3>
+            <div class="container">
+                <div class="row">
+                {% for sector in sectors %}
+                    <div class="col-md-4 col-sm-6 pd-10">
+                        <a class="text-primary"
+                           href="{% url 'sector_list' %}?sector={{ sector.name }}">{{ sector.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+            <hr>
+        </section>
+        <section>
+            <h3>Themes</h3>
+            <div class="container">
+                <div class="row">
+                {% for theme in themes %}
+                    <div class="col-md-4 col-sm-6 pd-10">
+                        <a class="text-primary"
+                           href="{% url 'theme-list' %}?sector={{ theme.name }}">{{ theme.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+            <hr>
+        </section>
+        <section>
+            <h3>Events</h3>
+            <div class="container">
+                <div class="row">
+                {% for event in events %}
+                    <div class="col-md-4 col-sm-6 pd-10">
+                        <a class="text-primary" href="{% url 'event_detail' pk=event.id %}">{{ event }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+            <hr>
+        </section>
+        <section>
+            <h3>Data</h3>
+            <div class="container">
+                <div class="row">
+                {% for databank in databanks %}
+                    <div class="col-md-4 col-sm-6 pd-10">
+                        <a class="text-primary" href="{% url 'databank_detail' data.id %}">{{ databank }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+            <hr>
+        </section>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% load static crispy_forms_tags  %}
+
+    {% block css %}
+   <link href="{% static 'css/content_editor.css' %}" rel="stylesheet" />
+
+    {% endblock css %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+            <div class="shadow mb-5 rounded sidebar">
+
+            <div class='nav-link'><a href="{% url 'post-list' %}" class='text-dark'>All posts</a></div>
+            <div class='nav-link'><a href="#" class='text-dark'>Categories</a></div>
+            <div class='nav-link'><a href="#" class='text-dark'>Subcategories</a></div>
+            <div class='nav-link'><a href="#" class='text-dark'>Tags</a></div>
+         
+            <div class="card-body text-center">
+                    <p class="reader-name"><a href="{% url 'index' %}">Go to publications</a> </p>
+            </div>
+            <div class="card-body text-center py-5">
+                
+            </div>
+            </div>
+
+        </div>
+        <div class="col-9">
+            <h3>Create New Post</h3>
+            <div class="jumbotron " >
+
+
+                <form id='form-container' method="post" action="{% url 'content_editor' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+
+                        <br>
+                    {{ whats_inside_form|crispy }}
+                        <br>
+                    {{ key_point_form|crispy }}
+                        <br>
+                    {{ introduction_form|crispy }}
+                        <br>
+                    {{ research_analysis_form|crispy }}
+                        <br>
+                    {{ what_we_think_form|crispy }}
+
+ 
+                    {{ formset.management_form }}
+                    {% for fm in formset %}
+                        <div class='post-body'>
+
+                        {{ fm.media }}
+                        {{ fm|crispy }}
+
+                        </div>
+                        
+                        {% endfor %}
+                    <button  id="add-form" type="button">Add New Section</button>
+
+                    <br> <br>
+                    <button type="submit" id="submit" class="btn btn-block btn-primary">Submit</button>  
+                                  
+                </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script src="/static/ckeditor/ckeditor-init.js"></script>
+<script src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+<script>
+
+let postBodyForm = document.querySelectorAll(".post-body")
+let container = document.querySelector("#form-container")
+let addButton = document.querySelector("#add-form")
+let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+let formNum = postBodyForm.length-1 // Get the number of the last form on the page with zero-based indexing
+
+let addForm = (e) => {
+    e.preventDefault()
+    //console.log('Came here')
+
+    let newForm = postBodyForm[0].cloneNode(false) //Clone the form
+    let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+    formNum++ //Increment the form number
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`) //Update the new form to have the correct form number
+
+    // create a new label to have title in
+    var title_label = document.createElement('label')
+    var title_label_content = document.createTextNode("Section Title");
+    title_label.appendChild(title_label_content);
+    newForm.appendChild(title_label)
+
+    // create a new input to have title in
+    var text_input = document.createElement('input')
+    text_input.setAttribute('id', `id_form-${formNum}-title`)
+    text_input.setAttribute('name', `form-${formNum}-title`)
+    text_input.setAttribute('class', 'textinput textInput form-control')
+    newForm.appendChild(text_input)
+
+    // create a new label to for textarea 
+    var textarea_label = document.createElement('label')
+    var textarea_label_content = document.createTextNode("Section Body");
+    textarea_label.appendChild(textarea_label_content);
+    newForm.appendChild(textarea_label)
+
+    // create a new textarea to have ckeditor in
+    var textarea = document.createElement('textarea')
+    textarea.setAttribute('id', `form-${formNum}-text`)
+    textarea.setAttribute('name', `form-${formNum}-text`)
+    textarea.setAttribute('class', 'ckeditor')
+    newForm.appendChild(textarea)
+
+    // create a new button to remove form
+    var span = document.createElement("span");
+    var span_content = document.createTextNode("Remove Section");
+    span.appendChild(span_content);
+    span.className = 'btn btn-warning mb-3 mt-3';
+    span.setAttribute('onclick', 'removeForm(event)');
+
+    newForm.appendChild(span); //Insert the new button into the form
+    container.insertBefore(newForm, addButton) //Insert the new form at the end of the list of forms
+    totalForms.setAttribute('value', `${formNum+1}`) //Increment the number of total forms in the management form
+    CKEDITOR.replace(`form-${formNum}-text`); // initialise editor on textarea
+
+};
+function removeForm(event) {
+    //removes the addtional section
+    event.path[1].innerHTML = '';
+    // console.log(event.path)
+};
+addButton.addEventListener('click', addForm) 
+
+</script>
+
+{% endblock javascript %}

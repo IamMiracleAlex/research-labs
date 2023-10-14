@@ -1,0 +1,134 @@
+.card-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+    /* identical to box height, or 120% */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.25px;
+
+    /* Primary/Full */
+
+    color: #0F0F10;
+}
+
+.card-text {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    /* or 150% */
+
+    display: flex;
+
+    /* Primary/Mid */
+
+    color: #454545;
+
+}
+
+.card-body .event-text {
+    line-height: 2.6rem;
+}
+
+.card-btn {
+    width: 185px;
+    height: 53px;
+    background: #D62E2F;
+    /* Primary/Coresight Research - Red */
+
+    border: 1px solid #D62E2F;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: #FAFAFA;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.featured-posts {
+    background: #FAFAFA;
+    padding: 40px 100px 36px 100px;
+}
+
+div.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+    padding: 0 50px;
+}
+
+::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: #454545;
+    padding: 14px 55px;
+    text-align: center;
+    text-decoration: none;
+    background: #EDF0F2;
+    margin-right: 19px;
+}
+
+
+div.scrollmenu .active a {
+    color: #D62E2F;
+}
+
+
+.theme-list {
+    padding: 0 100px;
+    margin-top: 20px;
+}
+
+.theme-list .card-body {
+    overflow: hidden;
+}
+
+.theme-list .card-text {
+    /* Subtitle 1/Semi-bold */
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    /* or 150% */
+
+    display: flex;
+    align-items: center;
+
+    /* Primary/Full */
+
+    color: #0F0F10;
+}
+
+.scrollmenu .slick-prev,
+.scrollmenu .slick-next {
+    width: 28px;
+    height: 28px;
+    z-index: 1;
+    transition: .5s;
+    color: #FFFFFF;
+    background: gray;
+    border-radius: 4px;
+}
+
+.scrollmenu .slick-prev {
+    left: 30px;
+}
+
+.scrollmenu .slick-next {
+    right: 30px;
+}
+
+.search-bar {
+    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.07));
+}

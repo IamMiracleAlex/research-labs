@@ -1,0 +1,108 @@
+{% load static %}
+<div class="row base">
+  <div class="container">
+    <div class="text-center">
+      <div class="sub-form">
+        <script
+          charset="utf-8"
+          type="text/javascript"
+          src="//js.hsforms.net/forms/v2.js"
+        ></script>
+
+        <script>
+          hbspt.forms.create({
+            region: "na1",
+
+            portalId: "9302266",
+
+            formId: "96570d97-c3e8-4a56-b268-6da52b9e4f3b",
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6">
+        <div class="footer-widget">
+          <h3 class="title semi-bold">Register</h3>
+          <p>
+            Register for a free user account to leave comments and access more
+            research, including Company Earnings, Company Profiles and
+            Presentations.
+          </p>
+          <p>Click <a href="{% url 'signup' %}"><strong>here</strong></a> to register</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-widget">
+          <h3 class="title semi-bold">Quick Links</h3>
+          <ul>
+            <li>
+              <a
+                href="https://coresight.com/singles-day-the-11-11-global-shopping-festival/"
+                target="_blank"
+              >Single's Day</a
+              >
+            </li>
+            {% for databank in databanks %}
+            <li>
+              <a
+                href="{{databank.get_absolute_url}}"
+                >{{databank}}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-5 col-md-6">
+        <div class="footer-widget">
+          <h3 class="title semi-bold">Feedback</h3>
+          <div class="">
+            <form>
+              <label for="email">Email*</label>
+              <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="id_email"
+                placeholder="Your email here"
+              />
+              <label for="message">Message</label>
+              <textarea
+                class="form-control"
+                name="message"
+                id="id_message"
+                cols="10"
+                rows="3"
+                placeholder="Enter your message here"
+              ></textarea>
+              <button class="btn btn-danger">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer End -->
+
+<!-- Footer Bottom Start -->
+<div class="row footer-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 copyright text-center">
+        <p>Copyright &copy; 2021 Coresight Research. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer Bottom End -->
+
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>

@@ -1,0 +1,17 @@
+{% load static %}
+
+{% if object_list %}
+<div class="jumbotron jumbotron-fluid coresight-bg" style="background-image: linear-gradient(to right, rgba(136, 2, 13, 0.92), rgba(245, 246, 252, 0.73));">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7 coresight-header">
+                <h2 class="title">{{object_list.title}}</h2>
+            </div>
+            <div>
+                <div class="coresight-img-bg" style="background-image: url('{{ object_list.image}}'); background-position: center; background-size: cover">
+                </div>
+            </div>
+       </div>
+    </div>
+</div>
+{% endif %}

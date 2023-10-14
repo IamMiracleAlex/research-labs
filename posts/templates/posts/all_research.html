@@ -1,0 +1,398 @@
+{% extends 'base.html'  %}
+{% load static crispy_forms_tags %}
+{% load static filters %}
+
+    {% block css %}
+    <link href="{% static 'css/posts.css' %}" rel="stylesheet" />
+    <link href="https://rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
+    <style>
+        .btn:focus {
+            outline: 0;
+            box-shadow: none !important;
+        }
+        .col-md-12 .dropdown {
+            min-width: 10%;
+        }
+        .dropdown-item {
+            font-size: .9rem;
+            margin-bottom: 0px;
+        }
+        .filtered-results {
+            margin-bottom: 15px;
+        }
+        .badge {
+            font-size: .8rem;
+            font-weight: 400;
+            padding: .6rem .9rem;
+            margin-right: 5px;
+        }
+        .cancel-badge {
+            margin-left: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .dropdown-menu {
+            max-height: 400px;
+            overflow: auto;
+        }
+        .fix-element {
+            background-color: #fff;
+            width:100%;
+            z-index:100;
+        }
+    </style>
+    {% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-20 fix-element">
+        <div
+            class="col-md-5 col-sm-12 col-xs-12"
+            style="align-self: flex-end; margin-bottom: 15px;"
+        >
+            <h4 class="display-5">
+                {% if request.GET.q %}Research Search for:{% else %}All Research{% endif %}
+                {% if request.GET.q %}
+                <span>{{ request.GET.q|capfirst }}</span>
+                {% endif %} 
+            </h4>
+        </div>
+        <div class="col-md-12" style="display: flex;">
+            <div class="dropdown">
+                <h5 class="display-6 semi-bold">Filters:</h5>
+            </div>
+            <div class="dropdown">
+                <button name="theme" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Themes
+                </button>
+                <div class="dropdown-menu">
+                    {% for theme in themes %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="theme"
+                            data-item="{{ theme.name }}"
+                            id="theme_{{theme.id}}"
+                            value="{{theme.id}}"
+                        >
+                        {{ theme.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No themes found</small>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button name="publicationDate" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Companies
+                </button>
+                <div class="dropdown-menu">
+                    {% for company in companies %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="company"
+                            data-item="{{ company.name }}"
+                            id="company_{{company.id}}"
+                            value="{{company.id}}"
+                        >
+                        {{ company.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No company found</small>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button name="region" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Regions
+                </button>
+                <div class="dropdown-menu">
+                    {% for region in regions %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="region"
+                            data-item="{{ region.name }}"
+                            id="tag_{{region.id}}"
+                            value="{{region.id}}"
+                        >
+                        {{ region.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No region found</small>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button name="product" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Products
+                </button>
+                <div class="dropdown-menu">
+                    {% for product in products %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="product"
+                            data-item="{{ product.name }}"
+                            id="product_{{product.id}}"
+                            value="{{product.id}}"
+                        >
+                        {{ product.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No products category found</small>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button name="category" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Sectors
+                </button>
+                <div class="dropdown-menu">
+                    {% for sector in sectors %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="sector"
+                            data-item="{{ sector.name }}"
+                            id="sector_{{sector.id}}"
+                            value="{{sector.id}}"
+                        >
+                        {{ sector.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No sector found</small>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dropdown">
+                <button name="tag" class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                    Tagging
+                </button>
+                <div class="dropdown-menu">
+                    {% for tag in tags %}
+                    <label class="dropdown-item">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            name="tag"
+                            data-item="{{ tag.name }}"
+                            id="tag_{{tag.id}}"
+                            value="{{tag.id}}"
+                        >
+                        {{ tag.name }}
+                    </label>
+                    {% empty %}
+                        <small class="dropdown-item">No tag found</small>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="filtered-results">
+    </div>
+    <div class="container-wrapper">
+        <div class="row infinite-container">
+            {% for post in all_posts %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pd-10 infinite-item">
+                <div class="card">
+                    <a href="{% url 'post-detail' slug=post.slug %}">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" height="140" />
+                        {% else %}
+                        <img src="{{post.image_url}}" alt="" srcset="">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                    {% comment %} <span class="category thin">{{}}</span> {% endcomment %}
+                    <p class="card-text semi-bold">{{post.title|truncatewords:6}}</p>
+                    <p class="card-text-small">{{post.excerpt|truncatewords:10}}</p>
+                    </div>
+                    <div class="card-link">
+                        <a
+                            class="more"
+                            href="{% url 'post-detail' slug=post.slug %}"
+                        >Read More <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-12" style="text-align: center; width: 100%; margin: 50px auto;">
+                <p>No available research for your query...</p>
+            </div>
+            {% endfor %}
+        </div> 
+    </div>
+    <div class="text-center">
+        {% if all_posts.has_next %}
+            <a class="btn btn-danger infinite-more-link" href="?page={{ all_posts.next_page_number }}">View All Research</a>
+        {% endif %}
+    </div>
+
+    <div class="loading text-center" style="display: none;">
+        <i class="fas fa-spinner"></i> Loading more...
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="{% static 'js/editable-select.js' %}"></script>
+<script>
+    let infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+</script>
+<script>
+// jQuery('.dropdown-toggle').on('click', function (e) {
+//   $(this).next().toggle();
+// });
+jQuery('.dropdown-menu.show').on('click', function (e) {
+  e.stopPropagation();
+});
+
+</script>
+
+<script>
+    let dataset = [];
+    // create query parameters from checked boxes
+    function getCheckedBoxes(chkboxName) {
+        var checkboxes = document.getElementsByName(chkboxName);
+        var checkboxesChecked = [];
+        for (var i=0; i<checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkboxesChecked.push(checkboxes[i].value);
+            }
+        }
+        return checkboxesChecked.join(',');
+    }
+
+    // create query parameters from selected dropdown
+    function getSelectedValue(id) {
+        return $('#' + id).val();
+    }
+    
+    // update url with new query parameters
+    function updateQueryStringParameter(uri, value) {
+            return `${uri}?${value}`;
+    }
+
+    // create a json object from query parameters
+    function getQueryParams(params) {
+        var defaultQuery = document.location.search;
+        let queryParams = {}
+        if (defaultQuery && defaultQuery.split('q=').length > 1){
+            queryParams['q'] = defaultQuery.split('q=')[1].split('&')[0];
+        }
+
+        for (var i = 0; i < params.length; i++) {
+            var param = params[i].name;
+            queryParams[param] = getCheckedBoxes(param);
+        }
+        return queryParams;
+    }
+
+
+    // add click event to all checkboxes
+    function getURL(params) {
+        var queryParams = getQueryParams(params);
+        var queryString = Object.keys(queryParams).map(function(key) {
+                if (queryParams[key]) {
+                    return key + '=' + encodeURIComponent(queryParams[key]);
+                }
+            }).filter((val) => val !== undefined).join('&');
+        return updateQueryStringParameter(window.location.pathname, queryString);
+    }
+
+
+    function makeRequest(url) {
+        $.ajax({
+            url,
+            type: 'GET',
+            data: {
+                'q': getQueryParams(document.querySelectorAll('.btn.dropdown-toggle')),
+            },
+            success: function(data) {
+                var success =  $($.parseHTML(data)).find(".infinite-container"); // div.infinite-container
+                $('.infinite-container').html(success);
+            }
+        });
+    }
+
+    document.querySelectorAll('input[type=checkbox].checkbox').forEach(function(tag) {
+        tag.addEventListener('click', function(e) {
+            dataset.push(e.target.dataset.item);
+            refresh();
+        });
+    });
+
+    function refresh() {
+        var queryParams = getQueryParams(document.querySelectorAll('.btn.dropdown-toggle'));
+            var queryString = Object.keys(queryParams).map(function(key) {
+                if (queryParams[key]) {
+                    return key + '=' + encodeURIComponent(queryParams[key]);
+                }
+            }).filter((val) => val !== undefined).join('&');
+            let url = getURL(document.querySelectorAll('.btn.dropdown-toggle'));
+            window.history.pushState({path:url},'',url);
+            makeRequest(url);
+            // document.location.replace(url)
+            loadCheckedItems();
+    }
+
+    function loadCheckedItems() {
+        var checked = document.querySelectorAll('input[type=checkbox].checkbox:checked');
+        // create a span tag for each checked checkbox
+        let filteredResults = document.querySelector('.filtered-results')
+        if (filteredResults) {
+            filteredResults.innerHTML = '';
+            checked.forEach(function(tag) {
+                var badge = document.createElement('p');
+                badge.setAttribute("name", tag.dataset.item);
+                badge.className = 'badge badge-pill badge-danger';
+                badge.innerHTML = `${tag.dataset.item} <span class="cancel-badge" onclick="cancelBadge(event)">x</span>`;
+                filteredResults.appendChild(badge);
+            });
+        }
+    }
+
+    function cancelBadge(e) {
+        var checked = document.querySelectorAll('input[type=checkbox].checkbox:checked');
+        var item = e.target.parentNode.getAttribute('name');
+        checked.forEach(function(tag) {
+            if (tag.dataset.item === item) {
+                tag.checked = false;
+            }
+        });
+        dataset = dataset.filter(function(value) {
+            return value !== item;
+        });
+        refresh()
+    }
+
+    $(window).scroll(function(e){ 
+        var $el = $('.fix-element'); 
+        var isPositionFixed = ($el.css('position') == 'fixed');
+        if ($(this).scrollTop() > 200 && !isPositionFixed){ 
+            $el.css({'position': 'fixed', 'top': '47px'}); 
+        }
+        if ($(this).scrollTop() < 200 && isPositionFixed){
+            $el.css({'position': 'static', 'top': '-10px'}); 
+        } 
+    });
+
+</script>
+{% endblock javascript %}

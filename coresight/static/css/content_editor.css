@@ -1,0 +1,62 @@
+.reader-name{
+
+
+    /* Body 1/Semi-bold */
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    /* or 162% */
+
+
+    /* Primary/Mid */
+
+    color: #454545;
+}
+
+.card-text {
+    font-family: Montserrat;
+font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 21px;
+
+/* Primary/Mid */
+
+color: #454545;
+
+}
+
+.card-text-2 {
+    font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 21px;
+
+/* Primary/Mid */
+
+color: #454545;
+}
+
+.h-2{
+    font-family: Poppins;
+}
+
+.border-line {
+  border: 1px solid #E2EDF9;
+}
+
+.plan-text {
+    font-family: Poppins;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+
+/* Primary/Coresight Research - Red */
+
+color: #D62E2F;
+}

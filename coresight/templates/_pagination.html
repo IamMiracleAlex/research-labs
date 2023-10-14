@@ -1,0 +1,41 @@
+<div class="row" style="justify-content: center;">
+	<nav class="text-center">
+		<ul class="pagination">
+			{% if object_list.has_previous %}
+			<li class="page-item">
+			  <a class="page-link" href="?{{page_tag}}={{ object_list.previous_page_number}}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			  </a>
+			</li>
+			{% else %}
+			<li class="page-item disabled">
+			  <a class="page-link" href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			{% endif %}
+			{% for page in object_list.paginator.page_range %}
+                {% if page <= 10 %}
+                    {% ifequal page object_list.number %}
+                        <li class="page-item disabled"><a class="page-link" href="?{{page_tag}}={{page}}">{{page}}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?{{page_tag}}={{page}}">{{page}}</a></li>
+                    {% endifequal %}
+                {% endif %}
+			{% endfor %}
+			{% if object_list.has_next %}
+			<li class="page_item">
+				<a class="page-link" href="?{{page_tag}}={{ object_list.next_page_number }}" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% else %}
+			<li class="page-item">
+			  <a class="page-link" href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			  </a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+</div><!-- end row -->

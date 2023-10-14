@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load filters %}
+
+    {% block css %}
+   <link href="{% static 'css/account.css' %}" rel="stylesheet" />
+    {% endblock css %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="mb-5">
+        <h3 class="mb-0">Welcome to Coresight Research Portal</h3>
+        <p>Kindly choose the plan below that best suits your interest</p>
+    </div>
+    <div class="row align-items-center" style="justify-content: center;">
+        <div class="col-md-4">
+            <div class="card plan">
+                <div class="card-body text-center">
+                    <h4 class="card-title font-weight-bold">Free Plan</h4>
+                    <h6 class="font-weight-bold">
+                        $0.00/
+                        <span class="font-weight-light">month</span>
+                    </h6>
+                    <small>Save 100% all through the year</small>
+                    <a href="{% url 'users:plan_activate' %}?plan=Free" class="btn btn-danger btn-block mt-3 mb-3 font-weight-bold">Get Started</a>
+                    <div class="text-left">
+                        <p class="font-weight-bold">Benefits</p>
+                        <ul style="list-style-type: square;">
+                            <li>Only free articles</li>
+                            <li>Free all year</li>
+                            <li>Minimal dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card plan">
+                <div class="card-body text-center">
+                    <h4 class="card-title font-weight-bold">Premium Plan</h4>
+                    <h6 class="font-weight-bold">
+                        $400.00/
+                        <span class="font-weight-light">month</span>
+                    </h6>
+                    <small>Get full insights on data and articles</small>
+                    <a href="{% url 'users:plan_activate' %}?plan=Premium" class="btn btn-danger btn-block mt-3 mb-3 font-weight-bold">Get Started</a>
+                    <div class="text-left">
+                        <p class="font-weight-bold">Benefits</p>
+                        <ul style="list-style-type: square;">
+                            <li>Complete articles all year</li>
+                            <li>Full analytical insights</li>
+                            <li>State of the art dashboard</li>
+                            <li>Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

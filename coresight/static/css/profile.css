@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital@0;1&display=swap");
+
+/* temp utility */
+.red {
+  border: 2px solid red;
+}
+
+/* General styles */
+:root {
+  --gray: #898a8d;
+  --red: #cf2e2e;
+  --white: #fff;
+  --black: #0f0f10;
+  --semi-white: #fdfdff;
+  --semi-black: #454545;
+  --light-gray: #d8d8d8;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  font-weight: 400;
+}
+
+a,
+button,
+input {
+  text-decoration: none;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+/* utilities */
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+._wrap {
+  margin: 0 auto;
+  max-width: 1239px;
+}
+
+.btn {
+  --width: 200px;
+  --font: 1rem;
+  width: var(--width);
+  background-color: var(--red);
+  color: var(--white);
+  border-radius: 5px;
+  padding: 10px 22px;
+}
+
+.underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--black);
+}
+
+.mt-7 {
+  margin-top: 3.5em;
+}
+
+.font-mont {
+  font-family: "Montserrat", sans-serif;
+}
+
+.transition {
+  transition: all 0.3s linear;
+}
+
+/* ............main styles.............  */
+
+/* map to (Profile.html) Group1 profile-sub-nav */
+.profile-sub-nav .profile-sub-nav-link-wrapper {
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.profile-sub-nav .profile-sub-nav-link-wrapper button {
+  font-size: 0.85rem;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s linear;
+  border-bottom: 4px solid transparent;
+}
+
+.profile-sub-nav .profile-sub-nav-link-wrapper button.active {
+  border-bottom: 4px solid var(--red);
+  color: var(--red);
+}
+
+/* map to (profile.html) Group2 profile-user-wrapper*/
+.profile-user-wrapper {
+  border-bottom: 1px solid var(--light-gray);
+}
+
+button:focus {
+  outline: 0px dotted;
+  outline: 0px auto -webkit-focus-ring-color;
+}
+
+.profile-user-wrapper .image-wrap {
+  max-width: 250px;
+  max-height: 335px;
+  aspect-ratio: 1/1;
+}
+
+.profile-user-wrapper .user-info {
+  padding: 10px;
+}
+
+.profile-user-wrapper .user-info p {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.profile-user-wrapper .user-info small {
+  font-size: 1rem;
+  color: var(--light-gray);
+}
+
+/* map to (profile.html) Group3 profile-reports-wrapper*/
+.profile-reports-wrapper [data-article] {
+  visibility: collapse;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+
+.profile-reports-wrapper [data-article].active {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+}
+
+.profile-reports-wrapper .heading small {
+  font-size: 1rem;
+}
+
+.profile-reports-wrapper .report {
+  margin-bottom: 10px;
+  color: var(--semi-black);
+}
+
+.profile-reports-wrapper .report:hover {
+  box-shadow: 2px 2px 15px var(--light-gray);
+}
+
+.profile-reports-wrapper .image-wrap {
+  box-shadow: 1px 1px 5px var(--light-gray);
+  width: clamp(280px, 100%, 300px);
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.profile-reports-wrapper .body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  max-width: 600px;
+  min-height: 200px;
+}
+
+.profile-reports-wrapper .body .title {
+  font-size: 1rem;
+}
+
+.profile-reports-wrapper .body h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.profile-reports-wrapper .body .description {
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  color: var(--white);
+}
+
+@media screen and (min-width: 576px) {
+  /* map to html (events.html) GROUP 1 => events sub nav*/
+  .profile-sub-nav .profile-sub-nav-link-wrapper button {
+    font-size: 0.95rem;
+    padding: 10px 28px;
+  }
+}
+
+@media screen and (min-width: 650px) {
+  /* map to (profile.html) Group3 profile-reports-wrapper*/
+  .profile-reports-wrapper .report {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    justify-content: center;
+    column-gap: 1em;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* map to (profile.html) Group2 profile-user-wrapper*/
+  .profile-user-wrapper .user-info {
+    border-bottom: 1px solid var(--light-gray);
+  }
+}

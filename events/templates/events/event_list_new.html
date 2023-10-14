@@ -1,0 +1,670 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/event.css' %}" rel="stylesheet"/>
+{% endblock css %}
+
+{% block content %}
+
+
+    <!-- ....header starts here... -->
+    <!-- map to (events.css) GROUP 1 => events sub nav -->
+    <div class="events-sub-nav">
+      <div
+        class="d-flex justify-content-center align-items-center wrapper h-100"
+      >
+        <div class="events-sub-nav-link-wrapper d-flex">
+          <button data-btn="all" type="button" class="active">
+            All Events
+          </button>
+
+          <button data-btn="videos" type="button">Event Videos</button>
+
+          <button data-btn="presentations" type="button">
+            Event Presentations
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--All events (data-events="all" corresponds to data-btn="all") -->
+    <section class="active" data-events="all">
+      <!-- map to (events.css) Group 2 => events-heading-text-->
+      <div class="events-heading-text _wrap mt-5">
+        <h1 class="mx-auto text-lg-center">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. At ante non
+          placerat amet non a justo mattis sit. Vitae in egestas viverra leo ut.
+          Sit tempor in gravida maecenas ante leo porttitor mauris viverra. Nisl
+          eget sem est pulvinar sem. Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit.
+        </h1>
+      </div>
+
+      <!--map to (events.css) Group 3 => presentation banner -->
+      <div class="_wrap px-2 mt-7">
+        <section class="presentation-banner row g-0">
+          <div
+            class="text-con col-12 col-md-5 order-2 order-md-1 d-flex flex-column justify-content-center pe-md-5 p-2"
+          >
+            <small class="mt-4 mt-lg-0">Article</small>
+
+            <h2 class="mt-3">
+              {{ first_featured.title }}
+            </h2>
+
+            <div class="underline mt-3"></div>
+
+            <p class="text mt-3">
+              {{ first_featured.article|truncatewords:18 }} …
+            </p>
+            
+            {% if first_featured.video %}
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=first_featured.id %}">
+              Watch video
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+            {% else %}
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=first_featured.id %}">
+              Read presentation
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="image-con col-12 col-md-7 order-1 order-md-2">
+            {% if first_featured.banner_image %}
+                <img src="{{ first_featured.banner_image.url }}"/>
+            {% else %}
+                <img  
+                  src="{% static '/images/events/female-founders-forum-image-1.png' %}"
+                  alt="{{first_featured.title}}"
+                  />
+              
+            {% endif %}
+      
+          </div>
+        </section>
+      </div>
+
+      <!--map to (events.css) Group 4 => presentation cards -->
+      <section class="presentation-cards _wrap mt-7 px-2">
+        <div class="row">
+
+          {% for event in events %}
+            <article class="_card col-lg-3">
+              <a href="{% url 'event_detail' pk=event.id %}" class="image-wrap">
+                {% if event.banner_image %}
+                <img src="{{ event.banner_image.url }}" alt="" />
+                {% else %}
+                <img src="{% static 'images/events/presentation-card-image-2.png' %}" alt="" />
+                {% endif %}
+              </a>
+    
+              <div class="body">
+                <small>{{ event.event_type|title }}</small>
+    
+                <p class="mt-2">{{ event.title|truncatewords:6 }}</p>
+                
+                {% if event.video %}
+                <a class="mt-2" href="{% url 'event_detail' pk=event.id %}">Watch video</a>
+                {% else %}
+                <a class="mt-2" href="{% url 'event_detail' pk=event.id %}">Read presentation</a>
+                {% endif %}
+
+              </div>
+            </article>
+            {% endfor %}
+
+        </div>
+
+      </section>
+
+      <!--map to (events.css) Group 5 => presentation banner -->
+      <div class="_wrap px-2 mt-5">
+        <section class="presentation-banner row g-0">
+          <div
+            class="text-con col-12 col-md-5 order-2 d-flex flex-column justify-content-center ps-md-5 p-2"
+          >
+            <small class="mt-4 mt-lg-0">Article</small>
+
+            <h2 class="mt-3">
+              {{ second_featured.title }}
+            </h2>
+
+            <div class="underline mt-3"></div>
+
+            <p class="text mt-3">
+              {{ second_featured.article|truncatewords:18 }} …
+            </p>
+            
+            {% if second_featured.video %}
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=second_featured.id %}">
+              Watch video
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+
+            {% else %}
+            
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=second_featured.id %}">
+              Read presentation
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="image-con col-12 col-md-7 order-1">
+            {% if second_featured.banner_image %}
+            <img src="{{ second_featured.banner_image.url }}" alt="" />
+            {% else %}
+            <img src="{% static 'images/events/global-cross-border-image-6.png' %}" alt="" />
+            {% endif %}
+          </div>
+        </section>
+      </div>
+
+
+      <!-- Events  -->
+      <div class="_wrap px-2 mt-7">
+        <section class="events-table row g-0">
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-7.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 6th, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">Shoptalk Europe 2022</h3>
+
+            <p class="description">London Excel</p>
+          </div>
+
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-6.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 6th, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">Shoptalk Europe 2022</h3>
+
+            <p class="description">
+              Shoptalk Europe 2022: China and the World’s Most Innovative Retail
+              Experiences
+            </p>
+          </div>
+
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-8.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 20, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">NRF Supply Chain 360</h3>
+
+            <p class="description">NRF Supply Chain 360</p>
+          </div>
+
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-8.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 30, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">NRF Supply Chain 360</h3>
+
+            <p class="description">NRF Supply Chain 360</p>
+          </div>
+
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-7.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 20, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">Shoptalk Europe 2022</h3>
+
+            <p class="description">London Excel</p>
+          </div>
+
+          <div class="box col-12 col-sm-6 col-lg-4">
+            <!-- image on hover -->
+            <img
+              src="{% static 'images/events/event-table-image-6.png' %}"
+              alt="Shoptalk Europe 2022"
+            />
+            <!-- image on hover -->
+
+            <div>
+              <h4 class="date p-0 m-0">June 6th, 2022</h4>
+              <small class="tag">virtual</small>
+            </div>
+
+            <div class="underline"></div>
+
+            <h3 class="title">Shoptalk Europe 2022</h3>
+
+            <p class="description">
+              Shoptalk Europe 2022: China and the World’s Most Innovative Retail
+              Experiences
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <!--map to (events.css) Group 7 => event-benefits -->
+      <div class="_wrap px-2 mt-7">
+        <h2 class="event-benefits-title text-center">Benefits of Our Events</h2>
+
+        <section class="events-benefits row g-0 mt-5">
+          <div class="image-wrap col-12 col-md-6">
+            <img
+            src="{% static 'images/events/events-benefits-image-7.png' %}"
+            alt="benefits of our events at coresight research banner"
+            />
+          </div>
+
+          <ul class="body col-12 col-md-6 p-3 ps-md-5">
+            <li class="">
+              Two- to three-hour virtual events on focused topics, including a
+              keynote session, panel discussions and networking opportunities
+            </li>
+
+            <li class="">
+              Exclusive content and Q&A with live audience members, plus
+              on-demand replays
+            </li>
+
+            <li class="">
+              Be part of an ongoing community of industry leaders and active
+              participants
+            </li>
+
+            <li class="">
+              Strategic partnership in goal setting and overarching strategy
+            </li>
+
+            <li class="">
+              Conversations framed and staged around critical insights
+            </li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+
+
+    <!-- Events Videos Section -->
+    <!--Events videos (data-events="videos" corresponds to data-btn="videos") -->
+    <section data-events="videos">
+      <!--map to (events.css) Group 4 => presentation cards -->
+      <div class="px-2 mt-7">
+        <section class="presentation-cards _wrap mt-7 px-2">
+
+          <div class="row">
+
+            {% for event in event_videos %}
+              <article class="_card col-lg-3">
+                <a href="{% url 'event_detail' pk=event.id %}" class="image-wrap">
+                  {% if event.banner_image %}
+                  <img src="{{ event.banner_image.url }}" alt="" />
+                  {% else %}
+                  <img src="{% static 'images/events/presentation-card-image-2.png' %}" alt="" />
+                  {% endif %}
+                </a>
+      
+                <div class="body">
+                  <small>Video</small>
+      
+                  <p class="mt-2">{{ event.title|truncatewords:6 }}</p>
+                  
+                  <a class="mt-2" href="{% url 'event_detail' pk=event.id %}">Watch video</a>
+                 
+                </div>
+              </article>
+              {% endfor %}
+  
+          </div>
+
+        </section>
+      </div>
+
+
+      <!--map to (events.css) Group 5 => presentation banner -->
+      <div class="_wrap px-2 mt-5">
+        <section class="presentation-banner row g-0">
+          <div
+            class="text-con col-12 col-md-5 order-2 d-flex flex-column justify-content-center ps-md-5 p-2"
+          >
+            <small class="mt-4 mt-lg-0">Article</small>
+
+            <h2 class="mt-3">
+              {{ first_featured.title }}
+            </h2>
+
+            <div class="underline mt-3"></div>
+
+            <p class="text mt-3">
+              {{ first_featured.article|truncatewords:18 }} …
+            </p>
+
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=first_featured.id %}">
+              Read presentation
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="image-con col-12 col-md-7 order-1">
+            {% if first_featured.banner_image  %}
+            <img src="{{ first_featured.banner_image.url }}" alt="" />
+            {% else %}
+            <img src="{% static 'images/events/global-cross-border-image-6.png' %}" alt="" />
+            {% endif %}
+          </div>
+        </section>
+      </div>
+
+      <!--map to (events.css) Group 7 => event-benefits -->
+      <div class="_wrap px-2 mt-7">
+        <h2 class="event-benefits-title text-center">Benefits of Our Events</h2>
+
+        <section class="events-benefits row g-0 mt-5">
+          <div class="image-wrap col-12 col-md-6">
+            <img
+            src="{% static 'images/events/events-benefits-image-7.png' %}"
+            alt="benefits of our events at coresight research banner"
+            />
+          </div>
+
+          <ul class="body col-12 col-md-6 p-3 ps-md-5">
+            <li class="">
+              Two- to three-hour virtual events on focused topics, including a
+              keynote session, panel discussions and networking opportunities
+            </li>
+
+            <li class="">
+              Exclusive content and Q&A with live audience members, plus
+              on-demand replays
+            </li>
+
+            <li class="">
+              Be part of an ongoing community of industry leaders and active
+              participants
+            </li>
+
+            <li class="">
+              Strategic partnership in goal setting and overarching strategy
+            </li>
+
+            <li class="">
+              Conversations framed and staged around critical insights
+            </li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <!--Events Presentation Section -->
+    <!--Events Presentation (data-events="presentations" corresponds to data-btn="presentations") -->
+    <section data-events="presentations">
+      <!--map to (events.css) Group 4 => presentation cards -->
+      <div class="px-2 mt-7">
+        <section class="presentation-cards _wrap mt-7 px-2">
+
+
+          <div class="row">
+
+            {% for event in event_presentations %}
+              <article class="_card col-lg-3">
+                <a href="{% url 'event_detail' pk=event.id %}" class="image-wrap">
+                  {% if event.banner_image %}
+                  <img src="{{ event.banner_image.url }}" alt="" />
+                  {% else %}
+                  <img src="{% static 'images/events/presentation-card-image-2.png' %}" alt="" />
+                  {% endif %}
+                </a>
+      
+                <div class="body">
+                  <small>Presentation</small>
+      
+                  <p class="mt-2">{{ event.title|truncatewords:6 }}</p>
+                  
+                  <a class="mt-2" href="{% url 'event_detail' pk=event.id %}">Read Presentation</a>
+                 
+                </div>
+              </article>
+              {% endfor %}
+  
+          </div>
+
+
+        </section>
+      </div>
+
+      <!--map to (events.css) Group 5 => presentation banner -->
+      <div class="_wrap px-2 mt-5">
+        <section class="presentation-banner row g-0">
+          <div
+            class="text-con col-12 col-md-5 order-2 d-flex flex-column justify-content-center ps-md-5 p-2"
+          >
+            <small class="mt-4 mt-lg-0">Article</small>
+
+            <h2 class="mt-3">
+              {{ second_featured.title }}
+            </h2>
+
+            <div class="underline mt-3"></div>
+
+            <p class="text mt-3">
+              {{ second_featured.article|truncatewords:18 }} …
+
+            </p>
+
+            <a class="presentation-btn btn mt-3" href="{% url 'event_detail' pk=second_featured.id %}">
+              Read presentation
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="image-con col-12 col-md-7 order-1">
+            {% if second_featured.banner_image %}
+            <img src="{{ second_featured.banner_image.url }}" alt="" />
+            {% else %}
+            <img src="{% static 'images/events/global-cross-border-image-6.png' %}" alt="" />
+            {% endif %}
+          </div>
+        </section>
+      </div>
+
+      <!--map to (events.css) Group 7 => event-benefits -->
+      <div class="_wrap px-2 mt-7">
+        <h2 class="event-benefits-title text-center">Benefits of Our Events</h2>
+
+        <section class="events-benefits row g-0 mt-5">
+          <div class="image-wrap col-12 col-md-6">
+            <img
+              src="{% static 'images/events/events-benefits-image-7.png' %}"
+              alt="benefits of our events at coresight research banner"
+            />
+          </div>
+
+          <ul class="body col-12 col-md-6 p-3 ps-md-5">
+            <li class="">
+              Two- to three-hour virtual events on focused topics, including a
+              keynote session, panel discussions and networking opportunities
+            </li>
+
+            <li class="">
+              Exclusive content and Q&A with live audience members, plus
+              on-demand replays
+            </li>
+
+            <li class="">
+              Be part of an ongoing community of industry leaders and active
+              participants
+            </li>
+
+            <li class="">
+              Strategic partnership in goal setting and overarching strategy
+            </li>
+
+            <li class="">
+              Conversations framed and staged around critical insights
+            </li>
+          </ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- footer here -->
+    <div class="mt-7"></div>
+
+
+    {% endblock content %}
+
+
+    {% block javascript %}
+    <!-- javascript.... -->
+    <script>
+        const allBtnElements = document.querySelectorAll("[data-btn]");
+        const allEventElements = document.querySelectorAll("[data-events]");
+  
+        allBtnElements.forEach((el) => {
+          el.addEventListener("click", () => {
+            // toggle link
+            allBtnElements.forEach((link) => {
+              el === link
+                ? link.classList.add("active")
+                : link.classList.remove("active");
+            });
+  
+            // toggle events
+            allEventElements.forEach((events) => {
+              events.dataset.events === el.dataset.btn
+                ? events.classList.add("active")
+                : events.classList.remove("active");
+            });
+          });
+        });
+      </script>
+    {% endblock javascript %} 
+
+
+
+
+

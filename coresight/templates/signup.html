@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <style>
+        input[type=radio] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .form-check-label span{
+            font-family: Montserrat, serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 25px;
+        }
+
+        .submit-btn {
+            width: 105px;
+            height: 50px;
+            background: #8D8D8D;
+            border-radius: 3px;
+        }
+    </style>
+{% endblock css %}
+
+{% block content %}
+    <section class="container my-5">
+        <div>
+            <p><strong><i class="bi bi-arrow-left" style="font-weight: bolder"></i></strong> Back</p>
+            <h2> Welcome To Coresight Research Portal</h2>
+            <P>Please kindly fill the form below to provide your details</P>
+        </div>
+
+        <div class="container pt-5">
+            <div class="border border-secondary mx-auto" style="max-width: 948px">
+                <h3 class="pl-5 p-2 border border-bottom border-secondary"> Contact Details</h3>
+                <form method="POST">{% csrf_token %}
+                    <div class="form-row px-4">
+                        {% for field in form %}
+                            <div class="form-group col-md-6 mx-auto" style="max-width: 417px">
+                                <small class="small" style="color: #c12;">
+                                    {{ field.errors }}
+                                </small>
+                                {{ field.label_tag }} {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pl-5">
+                        <div class="form-check p-4">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label pl-2" for="flexRadioDefault1">
+                                <span><strong>Free</strong>
+                        (Includes: Research Reports, Research Portal Access, Analyst Access, Events and Data Dashboard)
+                    </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                                   checked>
+                            <label class="form-check-label pl-2" for="flexRadioDefault2">
+                                <span><strong>Premium</strong>
+                        (Includes: Research Reports, Research Portal Access,
+                            Analyst Access, Events and Data Dashboard, Innovator Database,
+                            Custom Research Reports, Dedicated Account Representative, Ongoing Support and Data Inquiries).
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <button type="submit" class="submit-btn btn btn-secondary btn-lg">
+                            Register
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

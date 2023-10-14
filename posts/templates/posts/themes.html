@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static filters %}
+
+{% block css %}
+    <link href="{% static 'css/themes.css' %}" rel="stylesheet"/>
+{% endblock css %}
+
+{% block content %}
+    {% render_featured_post featured %}
+    <section>
+        <div class="scrollmenu">
+            {% for theme in themes %}
+                <l1 class="{% ifequal request.GET.theme theme.name %}active{% endifequal %}">
+                    <a href="{{ request.path }}?theme={{ theme.name }}">{{ theme.name }}</a>
+                </l1>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <form action="." method="get">
+                    <input
+                        class="form-control"
+                        type="search" name="search"
+                        value="{{request.GET.search}}"
+                        placeholder="Enter search item here"
+                    >
+                </form>
+            </div>
+        </div>
+
+    {% if request.GET.search %}
+        <div class="mb-3" >Search results for <strong> {{request.GET.search}} </strong> </div>
+    {% endif %}
+    
+        <div class="row">
+            {% for post in posts %}
+                {% render_post post %}
+            {% empty %}
+            <div class="col-sm-12" style="text-align: center; padding: 25px 0;">
+                <i class="fas fa-trash"></i>
+                <p>No available posts for this query</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            {% render_paginator posts %}
+        </div>
+    </section>
+
+{% endblock content %}
+
+{% block javascript %}
+   <script src="{% static 'js/themeSector.js' %}"></script>
+{% endblock javascript %}

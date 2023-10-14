@@ -1,0 +1,12 @@
+images are named according to appearance on the web page. The name count starts from left to right.
+
+Image count number is used to suffix names of images.
+
+
+eg. female-founders-forum-image-1.png.
+
+where name of image = female-founders-forum.
+
+count number = 1
+
+image file extension = png.

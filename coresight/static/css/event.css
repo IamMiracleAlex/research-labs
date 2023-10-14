@@ -1,0 +1,346 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital@0;1&display=swap");
+
+/* General styles */
+:root {
+  --gray: #898a8d;
+  --red: #cf2e2e;
+  --white: #fff;
+  --black: #0f0f10;
+  --semi-white: #fdfdff;
+  --semi-black: #454545;
+  --light-gray: #d8d8d8;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  font-weight: 400;
+}
+
+a,
+button,
+input {
+  text-decoration: none;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+/* utilities */
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+._wrap {
+  margin: 0 auto;
+  max-width: 1239px;
+}
+
+.btn {
+  --width: 200px;
+  --font: 1rem;
+  width: var(--width);
+  background-color: var(--red);
+  color: var(--white);
+  border-radius: 5px;
+  padding: 10px 22px;
+}
+
+.btn:hover {
+  color: var(--white);
+}
+
+.underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--black);
+}
+
+.mt-7 {
+  margin-top: 3.5em;
+}
+
+.font-mont {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ............main styles.............  */
+
+/* map to html (events.html) GROUP 1 => events sub nav*/
+.events-sub-nav {
+  height: 92px;
+  box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.07);
+
+  /* style declarations depends on the nav bar */
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  background-color: inherit;
+}
+
+[data-events] {
+  display: none;
+
+  /* alternative B  */
+  /* visibility: collapse;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s linear; */
+}
+
+[data-events].active {
+  display: block;
+
+  /* alternative B  */
+  /* visibility: visible;
+  height: auto;
+  opacity: 1; */
+}
+
+.events-sub-nav .events-sub-nav-link-wrapper button {
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray);
+  color: var(--white);
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 10px;
+  transition: all 0.3s linear;
+}
+
+.events-sub-nav .events-sub-nav-link-wrapper button.active {
+  background-color: var(--white);
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+/* map to (events.html) Group 2 => events heading text*/
+.events-heading-text h1 {
+  width: 100%;
+  font-size: 0.75em;
+  line-height: 30px;
+  padding: 10px;
+  color: var(--semi-black);
+}
+
+/* map to (events.html) Group 3 & 5 => presentation banner*/
+.presentation-banner {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+.presentation-banner .image-con {
+  max-height: 424px;
+}
+
+.presentation-banner .text-con small {
+  font-size: 0.9rem;
+}
+
+.presentation-banner .text-con h2 {
+  font-size: 1.15rem;
+  line-height: 24px;
+  max-width: 500px;
+  font-weight: 600;
+}
+
+.presentation-banner .text-con .text {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  line-height: 24px;
+  max-width: 500px;
+}
+
+.presentation-banner .text-con .presentation-btn {
+  font-size: 0.9rem;
+}
+
+/* map to (events.html) Group 4 => presentation cards*/
+.presentation-cards {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+}
+
+.presentation-cards ._card {
+  min-height: 434px;
+}
+
+.presentation-cards ._card .image-wrap {
+  display: block;
+  height: 60%;
+  max-height: calc(434px * 0.6);
+  border-radius: 2px 2px 0px 0px;
+  overflow: hidden;
+}
+
+.presentation-cards ._card .body {
+  padding: 15px 10px;
+  line-height: 26px;
+  border-radius: 12px;
+  background-color: var(--semi-white);
+  box-shadow: 0px 2px 6px rgba(7, 0, 59, 0.12);
+}
+
+.presentation-cards ._card .body small {
+  font-size: 0.9rem;
+  color: var(--semi-black);
+  font-family: "Montserrat", sans-serif;
+}
+
+.presentation-cards ._card .body p {
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.presentation-cards ._card .body a {
+  display: block;
+  color: var(--red);
+  font-size: 1.12rem;
+}
+
+/* map to (events.html) Group 6 => events-tables*/
+.events-table .box {
+  height: 400px;
+  border-radius: 5px;
+  border: 1px solid var(--light-gray);
+  padding: 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  position: relative;
+}
+
+.events-table .box:hover {
+  border: 1px transparent;
+}
+
+.events-table .box * {
+  transition: all 0.2s linear;
+}
+
+.events-table .box:hover * {
+  color: var(--white) !important;
+}
+
+.events-table .box:hover .underline {
+  background-color: var(--white) !important;
+}
+
+.events-table .box:hover img {
+  opacity: 1;
+}
+
+.events-table .box img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0;
+}
+
+.events-table .date,
+.events-table .tag,
+.events-table .description {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+}
+
+.events-table .date {
+  font-weight: 600;
+}
+
+.events-table .tag,
+.events-table .description {
+  color: var(--semi-black);
+}
+
+.events-table .title {
+  font-weight: 700;
+}
+
+/* map to (events.html) Group 7 => event-benefits*/
+.event-benefits-title {
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+.events-benefits .image-wrap {
+  max-height: 400px;
+}
+
+button:focus {
+  outline: 0px dotted;
+  outline: 0px auto -webkit-focus-ring-color;
+}
+
+.events-benefits .body {
+  min-height: 400px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.events-benefits .body li {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+}
+
+/* media queries */
+@media screen and (min-width: 576px) {
+  /* map to html (events.html) GROUP 1 => events sub nav*/
+  .events-sub-nav .events-sub-nav-link-wrapper button {
+    font-size: 1rem;
+    padding: 10px 28px;
+  }
+
+  /* map to (events.html) Group 2 => events heading text*/
+  .events-heading-text h1 {
+    width: clamp(95%, 95%, 1200px);
+    font-size: 0.85em;
+    text-align: center;
+  }
+
+  /* map to (events.html) Group 3 => presentation banner*/
+  .presentation-wrapper .text-con h2 {
+    font-size: 1.25rem;
+  }
+
+  /* map to (events.html) Group 4 => presentation cards*/
+  .presentation-card .content {
+    width: 90%;
+  }
+
+  /* map to (events.html) Group 7 => event-benefits*/
+  .event-benefits-title {
+    font-size: 2.5rem;
+  }
+}

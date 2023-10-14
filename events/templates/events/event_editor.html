@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% load static crispy_forms_tags %} {% block css %}
+<link href="{% static 'css/content_editor.css' %}" rel="stylesheet" />
+
+{% endblock css %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <div class="shadow mb-5 rounded sidebar">
+        <div class="nav-link">
+          <a href="{% url 'post-list' %}" class="text-dark">All posts</a>
+        </div>
+        <div class="nav-link"><a href="#" class="text-dark">Categories</a></div>
+        <div class="nav-link">
+          <a href="#" class="text-dark">Subcategories</a>
+        </div>
+        <div class="nav-link"><a href="#" class="text-dark">Tags</a></div>
+
+        <div class="card-body text-center">
+          <p class="reader-name">
+            <a href="{% url 'index' %}">Go to publications</a>
+          </p>
+        </div>
+        <div class="card-body text-center py-5"></div>
+      </div>
+    </div>
+    <div class="col-9">
+      <h3>Create New Event</h3>
+      <div class="jumbotron">
+        <form
+          id="form-container"
+          method="post"
+          action="{% url 'event_create' %}"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {{ form|crispy }}
+          <button type="submit" id="submit" class="btn btn-block btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %} {% block javascript %}
+
+  <script src="/static/ckeditor/ckeditor-init.js"></script>
+  <script src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+
+  {% endblock javascript %}
+</div>

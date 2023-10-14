@@ -1,0 +1,123 @@
+{% extends 'base.html'  %}
+{% load static  %}
+
+    {% block css %}
+   <link href="{% static 'css/databank.css' %}" rel="stylesheet" />
+
+    {% endblock css %}
+
+
+	{% block content %}
+
+		<!-- map to (data.css) Group1 data-hero-image -->
+		<section class="data-hero-image wrapper position-relative">
+		  <h1 class="text position-absolute">Data</h1>
+		  <img
+			src="{% static 'images/data-hero-image-1.png' %}"
+			alt="coresight research data hero image"
+		  />
+		</section>
+	
+		<!-- map to (data.css) Group2 data-heading-text -->
+		<div class="data-heading-text _wrap mt-5">
+		  <h1 class="mx-auto text-lg-center">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. At ante non placerat amet 
+			non a justo mattis sit. Vitae in egestas viverra leo ut. Sit tempor in gravida maecenas
+			 ante leo porttitor mauris viverra. Nisl eget sem est pulvinar sem. Lorem ipsum dolor sit amet, 
+			 consectetur adipiscing elit. 
+		  </h1>
+		</div>
+	
+		<!-- map to (data.css) Group3 presentation banner -->
+		<div class="_wrap px-2 mt-5">
+		  <section class="presentation-banner row g-0">
+			<div
+			  class="text-con col-12 col-md-5 order-2 d-flex flex-column justify-content-center ps-md-5 p-2"
+			>
+			  <small class="mt-4 mt-lg-0">Article</small>
+	
+			  <h2 class="mt-3">
+				 {{featured.title|truncatewords:10}}
+			  </h2>
+	
+			  <div class="underline mt-3"></div>
+	
+			  <p class="text mt-3">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. At ante non placerat amet 
+			non a justo mattis sit. …
+			  </p>
+	
+			  <a class="presentation-btn btn mt-3" href="#">
+				Read presentation
+				<svg
+				  xmlns="http://www.w3.org/2000/svg"
+				  width="16"
+				  height="16"
+				  fill="currentColor"
+				  class="bi bi-arrow-right"
+				  viewBox="0 0 16 16"
+				>
+				  <path
+					fill-rule="evenodd"
+					d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+				  />
+				</svg>
+			  </a>
+			</div>
+	
+			<div class="image-con col-12 col-md-7 order-1">
+			  <img
+				src="{{ featured.image.url }}"
+				alt="{{ featured.title|truncatewords:6 }}"
+			  />
+			</div>
+		  </section>
+		</div>
+	
+		<!-- map to (data.css) Group4 presentation cards-->
+		<section class="presentation-cards _wrap mt-7 px-2">
+		
+		<div class="row">
+
+			<div class="col-lg-3">
+
+		{% for data in databanks %}
+		  <article class="_card">
+			<a href="{% url 'databank_detail' data.id %}" class="image-wrap">
+			
+			  {% if data.image %}
+			  <img src="{{data.image.url}}" height="175" />
+			  {% else %}
+			  <img src="http://via.placeholder.com/640x360" height="175" alt="{{data.title}}" />
+			  {% endif %}
+			</a>
+	
+			<div class="body">
+			  <small>Article</small>
+	
+			  <p class="mt-2">{{data.title|truncatewords:5}}…</p>
+	
+			  <small class="mt-2">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. At ante non placerat amet 
+				non a justo mattis sit. …
+			  </small>
+	
+			  <a class="my-2" href="{% url 'databank_detail' data.id %}">Read more >></a>
+			</div>
+		  </article>
+
+		  {% empty %}
+
+		  <article class="_card">
+			<p>No available databanks at the moment...</p>
+			</article>
+
+		{% endfor %}
+		</div>
+		</div>
+		</section>
+	
+		<div class="mt-7"></div>
+	
+
+	{% endblock content %}

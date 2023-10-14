@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital@0;1&display=swap");
+
+/* General styles */
+
+:root {
+  --gray: #898a8d;
+  --red: #cf2e2e;
+  --white: #fff;
+  --black: #0f0f10;
+  --semi-white: #fdfdff;
+  --semi-black: #454545;
+  --light-gray: #d8d8d8;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  font-weight: 400;
+}
+
+a,
+button,
+input {
+  text-decoration: none;
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+/* utilities */
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+._wrap {
+  margin: 0 auto;
+  max-width: 1239px;
+}
+
+.btn {
+  --width: 200px;
+  --font: 1rem;
+  width: var(--width);
+  background-color: var(--red);
+  color: var(--white);
+  border-radius: 5px;
+  padding: 10px 22px;
+}
+
+.btn:hover {
+  color: var(--white);
+}
+
+.underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--black);
+}
+
+.mt-7 {
+  margin-top: 3.5em;
+}
+
+.font-mont {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* map to (data.html) Group1 data-hero-image */
+.data-hero-image {
+  max-height: 626px;
+}
+
+.data-hero-image img {
+  max-height: 600px;
+}
+
+.data-hero-image .text {
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: var(--white);
+  z-index: 1;
+}
+
+/* map to (data.html) Group2 data-heading-text */
+.data-heading-text h1 {
+  width: 100%;
+  font-size: 0.75em;
+  line-height: 30px;
+  padding: 10px;
+  color: var(--semi-black);
+}
+
+/* map tp (data.css) Group3 presentation banner*/
+.presentation-banner {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+.presentation-banner .image-con {
+  max-height: 424px;
+}
+
+.presentation-banner .text-con small {
+  font-size: 0.9rem;
+}
+
+.presentation-banner .text-con h2 {
+  font-size: 1.15rem;
+  line-height: 24px;
+  max-width: 500px;
+  font-weight: 600;
+}
+
+.presentation-banner .text-con .text {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  line-height: 24px;
+  max-width: 500px;
+}
+
+.presentation-banner .text-con .presentation-btn {
+  font-size: 0.9rem;
+}
+
+/* map to (events.html) Group 4 => presentation cards*/
+.presentation-cards {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+}
+
+.presentation-cards ._card {
+  min-height: 434px;
+}
+
+.presentation-cards ._card .image-wrap {
+  display: block;
+  height: 60%;
+  max-height: calc(434px * 0.6);
+  border-radius: 2px 2px 0px 0px;
+  overflow: hidden;
+}
+
+.presentation-cards ._card .body {
+  padding: 10px;
+  line-height: 26px;
+  border-radius: 12px;
+  background-color: var(--semi-white);
+  box-shadow: 0px 2px 6px rgba(7, 0, 59, 0.12);
+}
+
+.presentation-cards ._card .body small {
+  font-size: 0.9rem;
+  color: var(--semi-black);
+  font-family: "Montserrat", sans-serif;
+}
+
+.presentation-cards ._card .body p {
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.presentation-cards ._card .body a {
+  display: block;
+  color: var(--red);
+  font-size: 1.12rem;
+}
+
+@media screen and (min-width: 576px) {
+  /* map to (data.html) Group2 data-heading-text */
+  .data-heading-text h1 {
+    width: clamp(95%, 95%, 1200px);
+    font-size: 0.85em;
+    text-align: center;
+  }
+
+  /* map tp (data.css) Group3 presentation banner*/
+  .presentation-wrapper .text-con h2 {
+    font-size: 1.25rem;
+  }
+}

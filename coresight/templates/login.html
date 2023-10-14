@@ -1,0 +1,107 @@
+<!-- The Modal -->
+<div class="modal" id="myModal" data-backdrop="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="sign-in-form">
+                <div class="form-header">
+                    <h3> Sign In</h3>
+                    <p> Please fill in your details below to sign in</p>
+                </div>
+
+                <form id="sign_in_form" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Email address*</label>
+                        <input type="email" class="form-control py-4" id="email"
+                               placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password*</label>
+                        <input type="password" class=" form-control py-4" id="pwd"
+                               placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block">Submit</button>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% block css %}
+    <style>
+        .sign-in-form {
+            margin: auto;
+            width: 426px;
+            padding: 100px 0;
+        }
+
+
+        .form-header h3 {
+            /* Header/H3 */
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 31px;
+            line-height: 40px;
+            color: #D62E2F;
+        }
+
+        .form-header p {
+
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #454545;
+
+        }
+
+        .form-group label {
+            color: #454545;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 26px;
+        }
+    </style>
+{% endblock %}
+
+{% include '_js.html' %}
+{% block javascript %}
+    <script>
+        // hide modal when a user clicks outside it
+        $("#myModal").click(function (ev) {
+            if (ev.target !== this) return;
+            $('#myModal').modal('hide');
+        });
+
+        //process sign in
+        $(document).on('submit', '#sign_in_form', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "auth-login" %}',
+                data: {
+                    email: $('#email').val(),
+                    password: $('#pwd').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    location.reload()
+                },
+                error: function (xhr, errmsg, err) {
+                    $(".sign-in-form").prepend(
+                        `<div style="background: #fbcfcf; padding: 4px; color: #c12; margin-bottom: 4px;">
+                        <small>username or password is incorrect</small>
+                    </div>`
+                    )
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

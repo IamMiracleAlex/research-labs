@@ -1,0 +1,37 @@
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="{% static 'js/lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'js/lib/slick/slick.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.js' %}"></script>
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        var dropdown = $(".search-dropdown");
+        var toogleBtn = $(".search-dropdown .dropdown-t");
+        
+        // Toggle search and close icon for search dropdown
+        dropdown.on("show.bs.dropdown", function(e){
+            toogleBtn.toggleClass("d-none");
+        });
+        dropdown.on("hide.bs.dropdown", function(e){
+            toogleBtn.addClass("d-none");
+            toogleBtn.first().removeClass("d-none");
+        });
+
+        $("#advancedSearch").change(function(e){
+            e.preventDefault();
+            if(this.checked){
+                $("#advancedSearchForm").removeClass("d-none");
+            }
+            else{
+                $("#advancedSearchForm").addClass("d-none");
+            }
+        });
+    });
+
+
+</script>

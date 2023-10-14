@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load filters %}
+
+    {% block css %}
+   <link href="{% static 'css/profile.css' %}" rel="stylesheet" />
+    {% endblock css %}
+
+
+	{% block content %}
+
+		<!-- map to (Profile.css) Group1 profile-sub-nav -->
+	
+		<!-- body -->
+		<section class="_wrap row g-0 mt-5 px-2">
+		  <!-- map to (Profile.css) Group2 profile-user-wrapper -->
+		  <div class="profile-user-wrapper col-12 col-md-3 pb-3 pb-md-0">
+			<div class="row g-0">
+			  <div class="col-3 col-md-10">
+
+				<div class="image-wrap">
+				{% if user.photo %}
+				  <img
+					src="{{ user.photo.url }}"
+					alt="profile user image"
+				  />
+				  {% else %}
+				  <img
+					  class="card-img-top"
+					  src="{% static 'images/user_icon.png' %}"
+					  alt="Card image cap"
+					  style="filter: grayscale(1) contrast(145%)"
+				  >
+			  {% endif %}
+				</div>
+			  </div>
+	
+			  <div
+				class="user-info d-flex flex-column align-items-md-center justify-content-center col-9 col-md-10 ps-md-0 ps-4"
+			  >
+				<p class="name font-mont p-0 m-0">{{ user.full_name }}</p>
+	
+				<small class="tag fot-mont p-0 m-0">Reader</small>
+			  </div>
+			</div>
+		  </div>
+	
+		  <!-- map to (Profile.css) Group3 profile-reports-wrapper -->
+		  <div class="profile-reports-wrapper col-12 col-md-9 mt-5 mt-md-0">
+
+
+			<section
+			class="profile-sub-nav _wrap px-2 d-flex  align-items-center"
+		  >
+			<div class="profile-sub-nav-link-wrapper d-flex align-items-center">
+			  <button data-link="recommended" class="active" type="button">
+				Recommended Articles
+			  </button>
+			  <button data-link="read" type="button">List of Read Articles</button>
+			  <button data-link="recent" type="button">Recently Addded</button>
+			</div>
+		  </section> 
+  
+			<section class="active" data-article="recommended">
+			  <div class="heading row mb-3 px-4">
+				<div class=" col-12 col-md-6 mt-4">
+				  <small class="font-mont ">
+					You have <span>{{ total_reccommended }}</span> reccommended articles
+				  </small>
+				</div>
+	
+				<div class="text-center col-12 col-md-6 mt-4">
+				  <small class="font-mont">{{ today }}</small>
+				</div>
+			  </div>
+	
+			  <div>
+
+				{% for recommended_post in recommended_posts %}
+
+				<article class="report transition py-3">
+				  <a href="{% url 'post-detail' recommended_post.slug %}" class="image-wrap d-block">
+					<img width='200' height='100' src="{{ recommended_post.image.url }}" alt="{{ recommended_post.title|truncatechars:20 }}" />
+				  </a>
+	
+				  <div class="body">
+					<p class="title">
+						{% if recommended_post.formatted_categories%} {{ recommended_post.formatted_categories|truncatechars:25 }} {% endif %} :
+					</p>
+		
+					<h3 class="mt-2">{{ recommended_post.title|truncatechars:5 }}</h3>
+	
+					<p class="description mt-2">
+						{{ recommended_post.short_body|default_if_none:""|striptags|safe|truncatewords:20 }} …
+					</p>
+				  </div>
+				</article>
+
+	   			{% empty %}
+
+					<article class="report transition py-3">
+						No available recommendations yet.
+					</article>
+
+                {% endfor %}
+
+			  </div>
+			</section>
+	
+			<section data-article="read">
+			  <div class="heading row mb-3 px-4">
+				<div class="col-12 col-md-6 mt-4">
+				  <small class="font-mont">
+					You have read <span> {{total_read_posts}} </span> reports in <span>{{ month }}</span>
+				  </small>
+				</div>
+	
+				<div class="text-center col-12 col-md-6 mt-4">
+				  <small class="font-mont">{{ today }}</small>
+				</div>
+			  </div>
+	
+			  <div>
+
+
+
+				{% for read_post in read_posts %}
+				<article class="report transition py-3">
+				  <a href="{% url 'post-detail' read_post.post.slug  %}" class="image-wrap d-block">
+                    <img src="{{ read_post.post.image.url }}" width='200' height='100' alt="{{ read_post.post.title|truncatechars:20 }}">
+				  </a>
+	
+				  <div class="body">
+					<p class="title">
+					  {%if read_post.formatted_categories%} {{ read_post.formatted_categories|truncatechars:25 }}: {% endif %}
+					</p>
+	
+					<h3 class="mt-2">{{ read_post.post.title }}</h3>
+	
+					<p class="description mt-2">
+						{{ read_post.short_body|default_if_none:""|striptags|safe|truncatewords:20 }} …
+					</p>
+				  </div>
+				</article>
+
+				{% empty %}
+				<article class="report transition py-3">
+					You have not read any articles yet..
+				</article>
+				{% endfor %}
+	
+				
+			  </div>
+			</section>
+	
+			<section data-article="recent">
+			  <div class="heading row mb-3 px-4">
+				<div class="col-12 col-md-6 mt-4">
+				  <small class="font-mont">
+					<span> {{diff_since}}</span> new reports have been added to your reads
+				  </small>
+				</div>
+	
+				<div class="text-center col-12 col-md-6 mt-4">
+				  <small class="font-mont">{{ today }}</small>
+				</div>
+			  </div>
+	
+			  <div>
+
+
+
+				{% for post in recent_posts %}
+				<article class="report transition py-3">
+				  <a href="{% url 'post-detail' post.slug  %}" class="image-wrap d-block">
+					<img src="{{ post.image.url }}" width='200' height='100' alt="{{ post.title|truncatechars:20 }}">
+				</a>
+	
+				  <div class="body">
+					<p class="title">
+						{%if post.formatted_categories%} {{ post.formatted_categories|truncatechars:25 }} {% endif %}
+					</p>
+	
+					<h3 class="mt-2">{{ post.title }}</h3>
+	
+					<p class="description mt-2">
+						{{ post.short_body|default_if_none:""|striptags|safe|truncatewords:20 }} …
+					</p>
+				  </div>
+				</article>
+
+				{% empty %}
+				<article class="report transition py-3">
+					No rencently added articles yet.
+				</article>
+				{% endfor %}
+
+				
+			  </div>
+			</section>
+		  </div>
+		</section>
+
+	
+		{% endblock content %}
+	
+
+		{% block javascript %}
+		<!-- javascript here  -->
+		<script>
+		  const allBtnElements = document.querySelectorAll("[data-link]");
+		  const allArticlesElement = document.querySelectorAll("[data-article]");
+	
+		  allBtnElements.forEach((el) => {
+			el.addEventListener("click", () => {
+			  // toggle link
+			  allBtnElements.forEach((link) => {
+				el === link
+				  ? link.classList.add("active")
+				  : link.classList.remove("active");
+			  });
+	
+			  // toggle article content
+			  allArticlesElement.forEach((article) => {
+				article.dataset.article === el.dataset.link
+				  ? article.classList.add("active")
+				  : article.classList.remove("active");
+			  });
+			});
+		  });
+		</script>
+	
+		{% endblock javascript %}
